@@ -1,6 +1,6 @@
 Summary: Tool for configuring automatic updates
 Name: om-update-config
-Version: 0.1
+Version: 0.2
 Release: 1
 Url: http://openmandriva.org/
 Source0: https://github.com/OpenMandrivaSoftware/om-update-config/archive/%{version}/%{name}-%{version}.tar.gz
