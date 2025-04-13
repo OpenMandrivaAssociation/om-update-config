@@ -1,32 +1,38 @@
 Summary: Tool for configuring automatic updates
 Name: om-update-config
-Version: 0.2
-Release: 2
+Version: 1.0
+Release: 1
 Url: https://openmandriva.org/
 Source0: https://github.com/OpenMandrivaSoftware/om-update-config/archive/%{version}/%{name}-%{version}.tar.gz
+Group: System
 License: GPLv3
 BuildRequires: cmake ninja
-BuildRequires: cmake(Qt5Core)
-BuildRequires: cmake(Qt5Widgets)
-# Only for the cmake_kde5 rpm macro
+BuildRequires: cmake(Qt6Core)
+BuildRequires: cmake(Qt6Widgets)
+BuildSystem: cmake
 BuildRequires: cmake(ECM)
-Requires: dnf-automatic
+Requires: system-update = %{EVRD}
 
 %description
 Tool for configuring automatic updates
 
-%prep
-%autosetup -p1
-%cmake_kde5
+%package -n system-update
+Summary: Service for nightly update installation
+Group: System
+Recommends: logrotate
 
-%build
-%ninja_build -C build
-
-%install
-%ninja_install -C build
+%description -n system-update
+Service for nightly update installation
 
 %files
 %{_bindir}/om-update-config
 %{_bindir}/om-update-config-ui
 %{_datadir}/applications/om-update-config.desktop
 %{_datadir}/icons/*/*/*/*
+
+%files -n system-update
+%{_bindir}/update-system
+%{_unitdir}/system-update.service
+%{_unitdir}/system-update.timer
+%{_sysconfdir}/logrotate.d/*
+%ghost %{_localstatedir}/log/update.log
